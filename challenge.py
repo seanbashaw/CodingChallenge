@@ -1,4 +1,4 @@
-import sys, pathlib, re, os.path, collections, json
+import sys, pathlib, re, os.path, collections, json, pprint
 from argparse import ArgumentParser
 import xml.etree.ElementTree as ET
 
@@ -54,6 +54,7 @@ def parseTSV(file):
 	for li in lines:
 		if li:
 			li = li.split('\t')
+			li.remove('')
 			if (len(li)!=len(tags)):
 				printErr("Mismatch between tags and entry indexes in .TSV file.")
 			json_node = {}
@@ -117,5 +118,5 @@ for file in res.files:
 		parseTXT(file)
 	else:
 		printErr("File format"+pathlib.Path(file).suffix+" is not supported.")
-	print(json.dumps(collections.OrderedDict(sorted(JSON_ab.items())), indent=1))
-	sys.exit(0)
+print(sorted(JSON_ab.items()))
+sys.exit(0)
